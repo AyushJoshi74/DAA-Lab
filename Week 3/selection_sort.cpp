@@ -2,19 +2,20 @@
 
 using namespace std;
 
-int cmp=0;
+int comp=0;
 int swp=0;
 
 
-void selectionSort(int arr[], int n)
+void selection(int arr[], int n)
 {
     int i, j, min;
     for (i = 0; i < n-1; i++){
         min = i;
-        for (j = i+1; j < n; j++){
+        for (j = i+1; j < n; j++)
+        {
             if (arr[j] < arr[min])
                 min = j;
-            cmp++;
+                comp++;
         }
         int temp = arr[min];
         arr[min]=arr[i];
@@ -33,16 +34,19 @@ int main()
         int n;
         cin>>n;
         int arr[n];
-        for(int i=0;i<n;i++){
+        for(int i=0;i<n;i++)
+        {
             cin>>arr[i];
         }
-        cmp=0;
+        comp=0;
         swp=0;
-        selectionSort(arr, n);
+        selection(arr, n);
         for (int i=0; i < n; i++)
+        {
             cout << arr[i] << " ";
+        }
         cout << endl;
-        cout<<"comparisons: "<<cmp<<endl;
+        cout<<"comparisons: "<<comp<<endl;
         cout<<"swap: "<<swp<<endl;
     }
     
