@@ -1,30 +1,29 @@
-#include<iostream>
-#include<map>
+#include <bits/stdc++.h>
 using namespace std;
-void function(map<int,int> a,int n){
-    if(n < 2)
-        cout<<"NOT SUFFICIENT";
-    else if (n == 2){
-        
-    }
-    else{
-        long int l=1, m=1;
-        for(auto i=a.begin();i!=a.end();i++){
-            l = l * (i -> first);
-            m = m * (i -> second);
-        }
-        cout<<"OUTPUT:"<<endl<<max(l,m);
-    }
+
+int MatrixChainOrder(int p[], int i, int j)
+{
+	if (i == j)
+		return 0;
+	int k;
+	int min = INT_MAX;
+	int count;
+	for (k = i; k < j; k++)
+	{
+		count = MatrixChainOrder(p, i, k) + MatrixChainOrder(p, k + 1, j) + p[i - 1] * p[k] * p[j];
+		if (count < min)
+			min = count;
+	}
+	return min;
 }
-int main(){
-    int n,r,c;
+
+int main()
+{
+	int n;
     cin>>n;
-    map<int,int> a;
-    for(int i=0;i<n;i++){
-        cin>>r>>c;
-        a.insert(pair<int,int>(r,c));
+    int arr[n];
+    for(int i=0;i<n+1;i++){
+        cin>>arr[i];
     }
-    function(a,n);
-    
-    return 0;
+	cout << "Minimum number of multiplications is " << MatrixChainOrder(arr, 1, n);
 }
