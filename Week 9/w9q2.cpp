@@ -32,7 +32,7 @@ double fractionalKnapsack(int W, struct Item arr[], int n)
 			finalvalue += arr[i].value;
 		}
 		else {
-			int remain = W - curWeight;
+			int remain = W - curWeight; 
 			finalvalue += arr[i].value
 						* ((double)remain
 							/ (double)arr[i].weight);
