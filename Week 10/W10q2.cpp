@@ -1,47 +1,49 @@
-/*
-    NOT YET WORKING
-*/
 #include<iostream>
-#include<vector>
 #include<algorithm>
 using namespace std;
-void display(vector<int> values, int count){
-    cout<<"OUTPUT:"<<endl;
-    cout<<"No. of non - conflicting activities: "<<count<<endl;
-    cout<<"List of selected activities: ";
-    for(int i=0;i<values.size();i++)
-        cout<<values[i]<<", ";
+
+struct Job
+{
+    int id;	 
+    int dead; 
+    int profit;
+};
+
+bool comparison(Job a, Job b)
+{
+	return (a.profit > b.profit);
 }
-void activity_selection(vector<int> a,vector<int> b,int n){
-    // REAL WORKING STARTS HERE
-    int t;
-    vector<pair<int,int>> activity;
-    for(int i=0;i<n;i++)
-        activity.push_back(make_pair(b[i],a[i]));   // note that here we are inserting "b,a" and not "a,b"
-    sort(activity.begin(),activity.end());
-    int count = 0, current_end = -1;
-    vector<int> values;
-    for(int i=0;i<n;i++)
-        if(activity[i].second > current_end){
-            t = activity[i].second;
-            values.push_back(t);
-            count++;
-            current_end = activity[i].first;
-        }
-    display(values,count);
+
+void printJobScheduling(Job arr[], int n)
+{
+	sort(arr, arr+n, comparison);
+	int result[n]; 
+	bool slot[n]; 
+	for (int i=0; i<n; i++)
+		slot[i] = false;
+	for (int i=0; i<n; i++)
+	{
+	for (int j=min(n, arr[i].dead)-1; j>=0; j--)
+	{
+		if (slot[j]==false)
+		{
+			result[j] = i; 
+			slot[j] = true; 
+			break;
+		}
+	}
+	}
+	for (int i=0; i<n; i++)
+	if (slot[i])
+		cout << arr[result[i]].id << " ";
 }
-int main(){
-    int n,t;
-    cin>>n;
-    vector<int> a,b;
-    for(int i=0;i<n;i++){
-        cin>>t;
-        a.push_back(t);
-    }
-    for(int i=0;i<n;i++){
-        cin>>t;
-        b.push_back(t);
-    }
-    activity_selection(a,b,n);
-    return 0;
+
+int main()
+{
+	Job arr[] = { {1, 2, 2}, {2, 3, 1}, {3, 8, 3},
+				{4, 6, 2}, {5, 2, 2}, {6,5,2}, {7,3,1}};
+	int n = sizeof(arr)/sizeof(arr[0]);
+	cout << "Following is maximum profit sequence of tasks \n";
+	printJobScheduling(arr, n);
+	return 0;
 }
